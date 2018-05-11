@@ -2,12 +2,18 @@ package bobc.core.processing;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.nio.ByteBuffer;
 
 public class UShortConversionProcessor implements ConversionProcessor {
 
 	@Override
-	public <T> T fromBytes(Class<T> target, Annotation annotation, byte[] data) {
-		return null;
+	public Integer getSize() {
+		return 32;
+	}
+
+	@Override
+	public Object fromBytes(Class<?> target, Annotation[] fieldAnnotations, ByteBuffer buffer) {
+		return buffer.getInt();
 	}
 
 	@Override

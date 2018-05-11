@@ -2,6 +2,8 @@ package bobc.utils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import bobc.types.UShort;
 
@@ -13,24 +15,27 @@ public class ReflectionUtils {
 	 * @return
 	 */
 	public static Boolean isBobcType(Annotation annotation) {
-		// all internal bobc types will be stored in types package, so the annotation
-		// falls in the package then its bobc type, so taking reference of UShort
+		// all internal bobc types will be stored in types package, so the
+		// annotation
+		// falls in the package then its bobc type, so taking reference of
+		// UShort
 		// annotation
 		return annotation.annotationType().getPackage() == UShort.class.getPackage();
 	}
 
 	/**
-	 * There can be just one type definition for a field, so check if its of type
-	 * bobc and get it
+	 * There can be one or more type definition for a field, so check if its of
+	 * type bobc and get it
 	 * 
 	 * @param field
 	 * @return
 	 */
-	public static Annotation getBobcTypeAnnotationIfExists(Field field) {
+	public static List<Annotation> getBobcTypeAnnotationIfExists(Field field) {
+		List<Annotation> results = new ArrayList<>();
 		for (Annotation annotation : field.getDeclaredAnnotations()) {
 			if (ReflectionUtils.isBobcType(annotation))
-				return annotation;
+				results.add(annotation);
 		}
-		return null;
+		return results;
 	}
 }

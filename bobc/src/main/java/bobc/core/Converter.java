@@ -1,5 +1,6 @@
 package bobc.core;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +10,7 @@ public class Converter {
 	private List<Class> classList = new ArrayList<>();
 	private ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
 
-	BobcCore bobCore = new BobcCore();
+	BobcCore bobcCore = new BobcCore();
 
 	static public class ConverterBuilder {
 		private Converter converter;
@@ -37,8 +38,11 @@ public class Converter {
 		return new ConverterBuilder();
 	}
 
-	public void convert(byte[] data) {
-
+	public ObjectResults convert(byte[] data) {
+		java.nio.ByteOrder order = byteOrder == ByteOrder.LITTLE_ENDIAN ? java.nio.ByteOrder.LITTLE_ENDIAN
+				: java.nio.ByteOrder.BIG_ENDIAN;
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(order);
+		return bobcCore.convertbytesToTargetObjects(buffer, classList, byteOrder);
 	}
 
 	public void convert(String hexString) {

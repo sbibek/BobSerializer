@@ -1,10 +1,9 @@
 package bobc;
 
-import java.lang.reflect.Field;
+import java.nio.ByteBuffer;
 
 import bobc.core.ByteOrder;
 import bobc.core.Converter;
-import bobc.utils.ReflectionUtils;
 
 public class UsageTest {
 	public static void fn(Object... arguments) {
@@ -13,11 +12,12 @@ public class UsageTest {
 		}
 	}
 
+	public static byte[] toBytes(int i) {
+		return ByteBuffer.allocate(4).order(java.nio.ByteOrder.LITTLE_ENDIAN).putInt(i).array();
+	}
+
 	public static void main(String[] args) {
 		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(Test2.class).build();
-		Test2 t = new Test2(1);
-		for (Field f : t.getClass().getDeclaredFields()) {
-			System.out.println(ReflectionUtils.getBobcTypeAnnotationIfExists(f));
-		}
+		System.out.println(converter.convert(toBytes(998)).get(Test2.class).getB());
 	}
 }
