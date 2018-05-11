@@ -1,7 +1,5 @@
 package bobc.core;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +8,8 @@ import java.util.List;
 public class Converter {
 	private List<Class> classList = new ArrayList<>();
 	private ByteOrder byteOrder = ByteOrder.LITTLE_ENDIAN;
+
+	BobcCore bobCore = new BobcCore();
 
 	static public class ConverterBuilder {
 		private Converter converter;
@@ -38,13 +38,7 @@ public class Converter {
 	}
 
 	public void convert(byte[] data) {
-		classList.forEach(_class -> {
-			for (Field f : _class.getDeclaredFields()) {
-				Annotation[] annotations = f.getDeclaredAnnotations();
-				// BobcCore.processorRegistry.get(annotations[0].annotationType()).fromBytes(f.getType(),
-				// annotations[0]);
-			}
-		});
+
 	}
 
 	public void convert(String hexString) {
