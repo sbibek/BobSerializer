@@ -7,6 +7,5 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UShort {
-	static int size_bits = 16;
+public @interface XShort {
 }

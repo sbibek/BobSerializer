@@ -12,12 +12,15 @@ public class UsageTest {
 		}
 	}
 
-	public static byte[] toBytes(int i) {
-		return ByteBuffer.allocate(4).order(java.nio.ByteOrder.LITTLE_ENDIAN).putInt(i).array();
+	public static byte[] toBytes() {
+		return ByteBuffer.allocate(10).order(java.nio.ByteOrder.LITTLE_ENDIAN).putShort((short) 1).putShort((short) 2)
+				.putShort((short) 8).putShort((short) 99).putShort((short) 11).array();
 	}
 
 	public static void main(String[] args) {
 		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(Test2.class).build();
-		System.out.println(converter.convert(toBytes(998)).get(Test2.class).getB());
+		Test2 t = converter.convert(toBytes()).get(Test2.class);
+
+		System.out.println(t.getVarB() + " " + t.getS() + " " + t.getI() + " " + t.getL() + " " + t.getB());
 	}
 }

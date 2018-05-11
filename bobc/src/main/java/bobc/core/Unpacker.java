@@ -22,6 +22,7 @@ public class Unpacker {
 				// them
 				// should be type related annotaion for the field, right now
 				// lets go ahead and assume we have just one type annotation
+				// TODO
 				Annotation annotation = bobcAnnotations.get(0);
 				unpackField(instance, field, registry.get(annotation.annotationType()), buffer, order);
 			}
@@ -35,13 +36,15 @@ public class Unpacker {
 
 	private void unpackField(Object instance, Field field, ConversionProcessor processor, ByteBuffer buffer,
 			ByteOrder order) throws IllegalArgumentException, IllegalAccessException {
-		field.setAccessible(true);
 		byte[] data = new byte[(int) Math.ceil(processor.getSize() / 8.0)];
 		buffer.get(data);
 		ByteBuffer fieldBuffer = ByteBuffer.wrap(data).order(buffer.order());
 		// now lets create new Bytebuffer with the proper byte ordering
-		field.set(instance, field.getType()
-				.cast(processor.fromBytes(field.getType(), field.getDeclaredAnnotations(), fieldBuffer)));
+		Object result = processor.fromBytes(field.getType(), field.getDeclaredAnnotations(), fieldBuffer);
+		field.setAccessible(true);
+		if (result != null) {
+			field.set(instance, result);
+		}
 		field.setAccessible(false);
 	}
 }

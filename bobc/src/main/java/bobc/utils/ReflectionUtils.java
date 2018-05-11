@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import bobc.types.UShort;
+import bobc.types.XShort;
 
 public class ReflectionUtils {
 	/**
@@ -20,7 +20,7 @@ public class ReflectionUtils {
 		// falls in the package then its bobc type, so taking reference of
 		// UShort
 		// annotation
-		return annotation.annotationType().getPackage() == UShort.class.getPackage();
+		return annotation.annotationType().getPackage() == XShort.class.getPackage();
 	}
 
 	/**

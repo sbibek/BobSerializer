@@ -5,7 +5,8 @@ import java.util.Map;
 
 import bobc.core.BobcErrorCodes;
 import bobc.core.BobcException;
-import bobc.types.UShort;
+import bobc.core.processing.fieldConverters.ShortConversionProcessor;
+import bobc.types.XShort;
 
 @SuppressWarnings("rawtypes")
 public class FieldProcessorsRegistry {
@@ -16,7 +17,7 @@ public class FieldProcessorsRegistry {
 	}
 
 	private void registerBuiltInProcessors() {
-		conversionProcessorRegistry.put(UShort.class, new UShortConversionProcessor());
+		conversionProcessorRegistry.put(XShort.class, new ShortConversionProcessor());
 	}
 
 	public ConversionProcessor get(Class forClass) {

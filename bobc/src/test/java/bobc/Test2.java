@@ -1,20 +1,48 @@
 package bobc;
 
-import bobc.types.UShort;
+import bobc.types.XShort;
 
 public class Test2 {
-	@UShort
-	private Integer varB;
+	@XShort
+	private String varB;
+
+	@XShort
+	private Short s;
+
+	@XShort
+	private Integer i;
+
+	@XShort
+	private Long l;
+
+	@XShort
+	private Byte b;
 
 	public Test2() {
 	}
 
-	public Test2(Integer b) {
-		this.varB = b;
+	public String getVarB() {
+		return varB;
 	}
 
-	public Integer getB() {
-		return varB;
+	public Short getS() {
+		return s;
+	}
+
+	public Integer getI() {
+		return i;
+	}
+
+	public Long getL() {
+		return l;
+	}
+
+	public void setL(Long l) {
+		this.l = l;
+	}
+
+	public Byte getB() {
+		return b;
 	}
 
 }

@@ -1,9 +1,9 @@
 package bobc;
 
-import bobc.types.UShort;
+import bobc.types.XShort;
 
 public class Test1 {
-	@UShort
+	@XShort
 	private java.lang.Short a;
 
 	public Test1(java.lang.Short a) {
