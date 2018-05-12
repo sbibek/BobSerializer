@@ -48,7 +48,15 @@ public class UsageTest {
 		ObjectResults r = converter.convert(converter.convert(a, b));
 		Test1 t1 = r.get(Test1.class);
 		Test2 t2 = r.get(Test2.class);
-		System.out.println(t1.short1 + " " + t1.short2 + " " + t1.str + " ");
-		System.out.println(t2.short3 + " " + t2.short4 + " " + t2.short5);
+
+		TT test = new TT();
+
+		test.var = 121;
+		test.test = "212";
+
+		TT test2 = new TT();
+		test2.from(test.toBytes());
+
+		System.out.println(test2.var + " " + test2.test);
 	}
 }
