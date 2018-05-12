@@ -4,10 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 
 import bobc.core.ByteOrder;
-import bobc.core.ByteOrdering;
 import bobc.core.Converter;
 import bobc.core.ObjectResults;
-import bobc.core.Struct;
+import bobc.core.struct.ByteOrdering;
+import bobc.core.struct.Struct;
 import bobc.types.ShortType;
 
 public class UsageTest {

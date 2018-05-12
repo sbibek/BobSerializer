@@ -10,6 +10,12 @@ import bobc.core.processing.ConversionProcessor;
 import bobc.core.processing.ConversionUtil;
 import bobc.types.ShortType;
 
+/**
+ * Converter for ShortType
+ * 
+ * @author bibek.shrestha
+ *
+ */
 public class ShortTypeConversionProcessor implements ConversionProcessor {
 
 	@Override

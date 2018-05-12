@@ -11,7 +11,22 @@ import bobc.core.exception.BobcException;
 import bobc.core.processing.ConversionProcessor;
 import bobc.utils.ReflectionUtils;
 
+/**
+ * Utility to convert Object passed to byte[] representation in the given order
+ * 
+ * @author bibek.shrestha
+ *
+ */
 public class Packer {
+	/**
+	 * Convert object to byte[]
+	 * 
+	 * @param object
+	 *            object to be converted
+	 * @param order
+	 *            byte ordering
+	 * @return converted byte[] representation of the object
+	 */
 	public List<byte[]> pack(Object object, ByteOrder order) {
 		List<byte[]> bytes = new ArrayList<>();
 

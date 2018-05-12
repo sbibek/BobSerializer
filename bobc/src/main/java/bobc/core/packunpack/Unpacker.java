@@ -12,7 +12,27 @@ import bobc.core.exception.BobcException;
 import bobc.core.processing.ConversionProcessor;
 import bobc.utils.ReflectionUtils;
 
+/**
+ * Unpacker utility to unpack byte[] into class instances
+ * 
+ * @author bibek.shrestha
+ *
+ */
 public class Unpacker {
+	/**
+	 * unpack byte[] to target class instances
+	 * 
+	 * @param targetClass
+	 *            instances to be created from byte[]
+	 * @param buffer
+	 *            byte buffer containing data to be converted
+	 * @param order
+	 *            byte order
+	 * @param instances
+	 *            instances to be reused instead of creating for class represented
+	 *            in targetClass, if not present new instances will be created
+	 * @return
+	 */
 	public <T extends Object> T unpack(Class<T> targetClass, ByteBuffer buffer, ByteOrder order,
 			Map<Class<?>, Object> instances) {
 		try {
