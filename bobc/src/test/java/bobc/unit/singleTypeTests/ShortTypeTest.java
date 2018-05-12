@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 
 import org.junit.Test;
 
-import bobc.core.BobcRuntimeException;
+import bobc.core.BobcException;
 import bobc.core.ByteOrder;
 import bobc.core.Converter;
 import bobc.types.ShortType;
@@ -96,7 +96,7 @@ public class ShortTypeTest {
 		converter.convert(byteData);
 	}
 
-	@Test(expected = BobcRuntimeException.class)
+	@Test(expected = BobcException.class)
 	public void lossyConversionUnSupressedExceptionTest() {
 		byte[] byteData = generateDataForClassA();
 		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(ShortTypeClassB.class).build();

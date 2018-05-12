@@ -65,7 +65,8 @@ public class Converter {
 		// now check if all required objects are there
 		this.classList.forEach(cls -> {
 			if (!objectsMap.containsKey(cls)) {
-				throw new BobcRuntimeException("Conversion requires all objects to be passed");
+				throw new BobcException(BobcErrorCodes.INSUFFICIENT_DATA_PASSED,
+						"Conversion requires all objects to be passed");
 			}
 		});
 

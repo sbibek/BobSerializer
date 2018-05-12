@@ -3,7 +3,8 @@ package bobc.core.processing.fieldConverters;
 import java.lang.annotation.Annotation;
 import java.nio.ByteBuffer;
 
-import bobc.core.BobcRuntimeException;
+import bobc.core.BobcErrorCodes;
+import bobc.core.BobcException;
 import bobc.core.ByteOrder;
 import bobc.core.processing.ConversionProcessor;
 import bobc.core.processing.ConversionUtil;
@@ -41,11 +42,13 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 
 			if (!isSilent)
 				// else throw runtime error
-				throw new BobcRuntimeException("unallowed lossy conversion from Short to " + target);
+				throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION,
+						"unallowed lossy conversion from Short to " + target);
 		} else {
 			if (!isSilent)
 				// no conversion found
-				throw new BobcRuntimeException("unknown conversion from Short to " + target + " encountered");
+				throw new BobcException(BobcErrorCodes.UNKNOWN_CONVERSION,
+						"unknown conversion from Short to " + target + " encountered");
 		}
 		return null;
 	}
@@ -65,8 +68,8 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 			// conversion from integer, long, float, double to short is lossy
 			if (!allowLossyConversion) {
 				if (!isSilent) {
-					throw new BobcRuntimeException("unallowed lossy conversion from " + fieldType + " to "
-							+ ShortType.class + " during packing");
+					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION, "unallowed lossy conversion from "
+							+ fieldType + " to " + ShortType.class + " during packing");
 				}
 			} else {
 				// means make the lossy conversion
@@ -76,8 +79,8 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 			// conversion from integer, long, float, double to short is lossy
 			if (!allowLossyConversion) {
 				if (!isSilent) {
-					throw new BobcRuntimeException("unallowed lossy conversion from " + fieldType + " to "
-							+ ShortType.class + " during packing");
+					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION, "unallowed lossy conversion from "
+							+ fieldType + " to " + ShortType.class + " during packing");
 				}
 			} else {
 				// means make the lossy conversion
@@ -87,8 +90,8 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 			// conversion from integer, long, float, double to short is lossy
 			if (!allowLossyConversion) {
 				if (!isSilent) {
-					throw new BobcRuntimeException("unallowed lossy conversion from " + fieldType + " to "
-							+ ShortType.class + " during packing");
+					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION, "unallowed lossy conversion from "
+							+ fieldType + " to " + ShortType.class + " during packing");
 				}
 			} else {
 				// means make the lossy conversion
@@ -98,8 +101,8 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 			// conversion from integer, long, float, double to short is lossy
 			if (!allowLossyConversion) {
 				if (!isSilent) {
-					throw new BobcRuntimeException("unallowed lossy conversion from " + fieldType + " to "
-							+ ShortType.class + " during packing");
+					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION, "unallowed lossy conversion from "
+							+ fieldType + " to " + ShortType.class + " during packing");
 				}
 			} else {
 				// means make the lossy conversion
@@ -113,7 +116,7 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 		} else {
 			// means there is no conversion way for us
 			if (!isSilent)
-				throw new BobcRuntimeException(
+				throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION,
 						"unknown conversion from " + fieldType + " to " + ShortType.class + " during packing");
 			else {
 				// if silent then we need to put dummy data

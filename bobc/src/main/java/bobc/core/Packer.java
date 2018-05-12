@@ -26,7 +26,7 @@ public class Packer {
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				throw new BobcRuntimeException(e.getMessage());
+				throw new BobcException(BobcErrorCodes.UNKNOWN, e.getMessage());
 			}
 		}
 		return bytes;
@@ -42,7 +42,8 @@ public class Packer {
 				isSilent);
 		Integer expectedSize = (int) Math.ceil(processor.getSize() / 8.0);
 		if (result.length != expectedSize) {
-			throw new BobcRuntimeException("expected byte[] size " + expectedSize + " got " + result.length);
+			throw new BobcException(BobcErrorCodes.SIZE_EXPECTATION_MISMATCH,
+					"expected byte[] size " + expectedSize + " got " + result.length);
 		}
 		return result;
 	}

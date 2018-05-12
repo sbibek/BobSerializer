@@ -34,10 +34,8 @@ public class Unpacker {
 			}
 			return targetClass.cast(instance);
 		} catch (InstantiationException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new BobcException(BobcErrorCodes.UNKNOWN, e.getMessage());
 		}
-		return null;
 	}
 
 	private void unpackField(Object instance, Field field, ConversionProcessor processor, ByteBuffer buffer,
