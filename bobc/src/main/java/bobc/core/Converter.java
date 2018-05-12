@@ -58,7 +58,19 @@ public class Converter {
 	}
 
 	public byte[] convert(Object... objects) {
-		return new byte[1];
+		Map<Class<?>, Object> objectsMap = new HashMap<>();
+		for (Object obj : objects) {
+			objectsMap.put(obj.getClass(), obj);
+		}
+		// now check if all required objects are there
+		this.classList.forEach(cls -> {
+			if (!objectsMap.containsKey(cls)) {
+				throw new BobcRuntimeException("Conversion requires all objects to be passed");
+			}
+		});
+
+		// now lets offshore the task to core
+		return bobcCore.convertObjectsToBytes(objectsMap, classList, byteOrder);
 	}
 
 	public ByteOrder getByteOrder() {

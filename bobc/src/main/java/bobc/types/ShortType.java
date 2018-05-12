@@ -12,7 +12,9 @@ import bobc.core.processing.fieldConverters.ShortTypeConversionProcessor;
 public @interface ShortType {
 	Class<?> processor() default ShortTypeConversionProcessor.class;
 
-	boolean allowLossyConversion() default false;
+	boolean allowLossyConversionFrom() default false;
+
+	boolean allowLossyConversionTo() default false;
 
 	boolean silent() default false;
 }

@@ -21,9 +21,9 @@ public class ShortTypeTest {
 		public Short objectShortVariable;
 		@ShortType
 		public short primitiveShortVariable;
-		@ShortType(allowLossyConversion = true)
+		@ShortType(allowLossyConversionFrom = true)
 		public Byte objectByteVariable;
-		@ShortType(allowLossyConversion = true)
+		@ShortType(allowLossyConversionFrom = true)
 		public byte primitiveByteVariable;
 		@ShortType
 		public Integer objectIntegerVariable;
@@ -51,7 +51,7 @@ public class ShortTypeTest {
 
 	// allpw lossy conversion
 	static public class ShortTypeClassC {
-		@ShortType(allowLossyConversion = true)
+		@ShortType(allowLossyConversionFrom = true)
 		public Byte data;
 	}
 

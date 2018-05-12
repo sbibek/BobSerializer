@@ -83,9 +83,26 @@ public class ReflectionUtils {
 	 * @param annotation
 	 * @return
 	 */
-	public static Boolean getAllowedLossyConversion(Annotation annotation) {
+	public static Boolean getAllowedLossyConversionFrom(Annotation annotation) {
 		try {
-			return (Boolean) annotation.annotationType().getDeclaredMethod("allowLossyConversion").invoke(annotation);
+			return (Boolean) annotation.annotationType().getDeclaredMethod("allowLossyConversionFrom")
+					.invoke(annotation);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * Check if lossy conversion is allowed on bobc type
+	 * 
+	 * @param annotation
+	 * @return
+	 */
+	public static Boolean getAllowedLossyConversionTo(Annotation annotation) {
+		try {
+			return (Boolean) annotation.annotationType().getDeclaredMethod("allowLossyConversionTo").invoke(annotation);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException e) {
 			e.printStackTrace();

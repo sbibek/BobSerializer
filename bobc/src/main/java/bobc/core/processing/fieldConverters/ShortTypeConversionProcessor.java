@@ -1,12 +1,13 @@
 package bobc.core.processing.fieldConverters;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 
 import bobc.core.BobcRuntimeException;
+import bobc.core.ByteOrder;
 import bobc.core.processing.ConversionProcessor;
 import bobc.core.processing.ConversionUtil;
+import bobc.types.ShortType;
 
 public class ShortTypeConversionProcessor implements ConversionProcessor {
 
@@ -50,9 +51,77 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 	}
 
 	@Override
-	public <T> byte[] fromField(Field field, Annotation annotation) {
-		// TODO Auto-generated method stub
-		return null;
+	public byte[] fromField(Class<?> fieldType, Object fieldValue, Annotation[] fieldAnnotations, ByteOrder order,
+			Boolean allowLossyConversion, Boolean isSilent) {
+		// IMPORTANT your packing should match the size of in getSize()
+		ByteBuffer buffer = ByteBuffer.allocate(2).order(
+				order == ByteOrder.LITTLE_ENDIAN ? java.nio.ByteOrder.LITTLE_ENDIAN : java.nio.ByteOrder.BIG_ENDIAN);
+		if (fieldType.equals(Short.class) || fieldType.equals(Short.TYPE) || fieldType.equals(Byte.class)
+				|| fieldType.equals(Byte.TYPE)) {
+			// conversion from short to short and byte to short, no issues
+			buffer.putShort((short) fieldValue);
+
+		} else if (fieldType.equals(Integer.class) || fieldType.equals(Integer.TYPE)) {
+			// conversion from integer, long, float, double to short is lossy
+			if (!allowLossyConversion) {
+				if (!isSilent) {
+					throw new BobcRuntimeException("unallowed lossy conversion from " + fieldType + " to "
+							+ ShortType.class + " during packing");
+				}
+			} else {
+				// means make the lossy conversion
+				buffer.putShort((short) (int) (fieldValue));
+			}
+		} else if (fieldType.equals(Long.class) || fieldType.equals(Long.TYPE)) {
+			// conversion from integer, long, float, double to short is lossy
+			if (!allowLossyConversion) {
+				if (!isSilent) {
+					throw new BobcRuntimeException("unallowed lossy conversion from " + fieldType + " to "
+							+ ShortType.class + " during packing");
+				}
+			} else {
+				// means make the lossy conversion
+				buffer.putShort((short) (long) (fieldValue));
+			}
+		} else if (fieldType.equals(Float.class) || fieldType.equals(Float.TYPE)) {
+			// conversion from integer, long, float, double to short is lossy
+			if (!allowLossyConversion) {
+				if (!isSilent) {
+					throw new BobcRuntimeException("unallowed lossy conversion from " + fieldType + " to "
+							+ ShortType.class + " during packing");
+				}
+			} else {
+				// means make the lossy conversion
+				buffer.putShort((short) (float) (fieldValue));
+			}
+		} else if (fieldType.equals(Double.class) || fieldType.equals(Double.TYPE)) {
+			// conversion from integer, long, float, double to short is lossy
+			if (!allowLossyConversion) {
+				if (!isSilent) {
+					throw new BobcRuntimeException("unallowed lossy conversion from " + fieldType + " to "
+							+ ShortType.class + " during packing");
+				}
+			} else {
+				// means make the lossy conversion
+				buffer.putShort((short) (double) (fieldValue));
+			}
+		} else if (fieldType.equals(String.class)) {
+			// now we need to parse string field to short if possible
+			// else will throw number format exception
+			buffer.putShort(Short.parseShort((String) fieldValue));
+
+		} else {
+			// means there is no conversion way for us
+			if (!isSilent)
+				throw new BobcRuntimeException(
+						"unknown conversion from " + fieldType + " to " + ShortType.class + " during packing");
+			else {
+				// if silent then we need to put dummy data
+				short randomShort = 0;
+				buffer.putShort(randomShort);
+			}
+		}
+		return buffer.array();
 	}
 
 }
