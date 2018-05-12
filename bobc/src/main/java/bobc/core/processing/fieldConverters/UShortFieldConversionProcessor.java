@@ -7,9 +7,9 @@ import bobc.core.ByteOrder;
 import bobc.core.exception.BobcErrorCodes;
 import bobc.core.exception.BobcException;
 import bobc.core.processing.ConversionProcessor;
-import bobc.types.UShortType;
+import bobc.types.UShortField;
 
-public class UShortTypeConversionProcessor implements ConversionProcessor {
+public class UShortFieldConversionProcessor implements ConversionProcessor {
 
 	@Override
 	public Integer getSize() {
@@ -29,7 +29,7 @@ public class UShortTypeConversionProcessor implements ConversionProcessor {
 			} else {
 				if (!isSilent)
 					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION,
-							BobcErrorCodes.lossyConversionMsg(UShortType.class, target));
+							BobcErrorCodes.lossyConversionMsg(UShortField.class, target));
 			}
 		} else if (target.equals(Short.class) || target.equals(Byte.TYPE)) {
 			// this is also lossy conversion as unsigned cant fit in the short itself
@@ -38,7 +38,7 @@ public class UShortTypeConversionProcessor implements ConversionProcessor {
 			} else {
 				if (!isSilent)
 					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION,
-							BobcErrorCodes.lossyConversionMsg(UShortType.class, target));
+							BobcErrorCodes.lossyConversionMsg(UShortField.class, target));
 			}
 		} else if (target.equals(Integer.class) || target.equals(Integer.TYPE)) {
 			// now in case of java, the unisgned can be handled by upper bits type, for
@@ -57,7 +57,7 @@ public class UShortTypeConversionProcessor implements ConversionProcessor {
 		} else {
 			if (!isSilent) {
 				throw new BobcException(BobcErrorCodes.UNKNOWN_CONVERSION,
-						BobcErrorCodes.conversionNotKnown(UShortType.class, target));
+						BobcErrorCodes.conversionNotKnown(UShortField.class, target));
 			}
 		}
 
@@ -86,7 +86,7 @@ public class UShortTypeConversionProcessor implements ConversionProcessor {
 			} else {
 				if (!isSilent)
 					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION,
-							BobcErrorCodes.lossyConversionMsg(fieldType, UShortType.class));
+							BobcErrorCodes.lossyConversionMsg(fieldType, UShortField.class));
 			}
 		} else if (fieldType.equals(Long.class) || fieldType.equals(Long.TYPE)) {
 			// now long => unsigned short
@@ -95,7 +95,7 @@ public class UShortTypeConversionProcessor implements ConversionProcessor {
 			} else {
 				if (!isSilent)
 					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION,
-							BobcErrorCodes.lossyConversionMsg(fieldType, UShortType.class));
+							BobcErrorCodes.lossyConversionMsg(fieldType, UShortField.class));
 			}
 		} else if (fieldType.equals(Float.class) || fieldType.equals(Float.TYPE)) {
 			// now long => unsigned short
@@ -104,7 +104,7 @@ public class UShortTypeConversionProcessor implements ConversionProcessor {
 			} else {
 				if (!isSilent)
 					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION,
-							BobcErrorCodes.lossyConversionMsg(fieldType, UShortType.class));
+							BobcErrorCodes.lossyConversionMsg(fieldType, UShortField.class));
 			}
 		} else if (fieldType.equals(Double.class) || fieldType.equals(Double.TYPE)) {
 			// now long => unsigned short
@@ -113,7 +113,7 @@ public class UShortTypeConversionProcessor implements ConversionProcessor {
 			} else {
 				if (!isSilent)
 					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION,
-							BobcErrorCodes.lossyConversionMsg(fieldType, UShortType.class));
+							BobcErrorCodes.lossyConversionMsg(fieldType, UShortField.class));
 			}
 		} else if (fieldType.equals(String.class) || fieldType.equals(Character.class)
 				|| fieldType.equals(Character.TYPE)) {
@@ -122,7 +122,7 @@ public class UShortTypeConversionProcessor implements ConversionProcessor {
 		} else {
 			if (!isSilent)
 				throw new BobcException(BobcErrorCodes.UNKNOWN_CONVERSION,
-						BobcErrorCodes.conversionNotKnown(fieldType, UShortType.class));
+						BobcErrorCodes.conversionNotKnown(fieldType, UShortField.class));
 			// we should atleast init the buffer as dummy
 			buffer.putShort((short) 0);
 		}

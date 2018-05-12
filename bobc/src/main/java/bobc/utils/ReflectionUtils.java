@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bobc.core.processing.ConversionProcessor;
-import bobc.types.ShortType;
+import bobc.types.ShortField;
 
 public class ReflectionUtils {
 	/**
@@ -22,7 +22,7 @@ public class ReflectionUtils {
 		// falls in the package then its bobc type, so taking reference of
 		// UShort
 		// annotation
-		return annotation.annotationType().getPackage() == ShortType.class.getPackage();
+		return annotation.annotationType().getPackage() == ShortField.class.getPackage();
 	}
 
 	/**

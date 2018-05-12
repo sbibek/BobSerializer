@@ -12,7 +12,7 @@ import org.junit.Test;
 import bobc.core.ByteOrder;
 import bobc.core.Converter;
 import bobc.core.exception.BobcException;
-import bobc.types.ShortType;
+import bobc.types.ShortField;
 
 /**
  * @author bibek.shrestha
@@ -21,47 +21,47 @@ import bobc.types.ShortType;
 public class ShortTypeTest {
 
 	static public class ShortTypeClassA {
-		@ShortType
+		@ShortField
 		public Short objectShortVariable;
-		@ShortType
+		@ShortField
 		public short primitiveShortVariable;
-		@ShortType(allowLossyConversionFrom = true)
+		@ShortField(allowLossyConversionTo = true)
 		public Byte objectByteVariable;
-		@ShortType(allowLossyConversionFrom = true)
+		@ShortField(allowLossyConversionTo = true)
 		public byte primitiveByteVariable;
-		@ShortType
+		@ShortField
 		public Integer objectIntegerVariable;
-		@ShortType
+		@ShortField
 		public int primitiveIntegerVariable;
-		@ShortType
+		@ShortField
 		public Long objectLongVariable;
-		@ShortType
+		@ShortField
 		public long primitiveLongVariable;
-		@ShortType
+		@ShortField
 		public Float objectFloatVariable;
-		@ShortType
+		@ShortField
 		public float primitiveFloatVariable;
-		@ShortType
+		@ShortField
 		public Double objectDoubleVariable;
-		@ShortType
+		@ShortField
 		public double primitiveDoubleVariable;
 	}
 
 	// class with element that doesn't allow lossy conversios (eg short to byte)
 	static public class ShortTypeClassB {
-		@ShortType
+		@ShortField
 		public Byte byteData;
 	}
 
 	// allpw lossy conversion
 	static public class ShortTypeClassC {
-		@ShortType(allowLossyConversionFrom = true)
+		@ShortField(allowLossyConversionTo = true)
 		public Byte data;
 	}
 
 	// donot allow lossy converison but also donot throw any exceptions
 	static public class ShortTypeClassD {
-		@ShortType(silent = true)
+		@ShortField(silent = true)
 		public Byte data;
 	}
 

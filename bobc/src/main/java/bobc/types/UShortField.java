@@ -5,12 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import bobc.core.processing.fieldConverters.ShortTypeConversionProcessor;
+import bobc.core.processing.fieldConverters.UShortFieldConversionProcessor;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ShortType {
-	Class<?> processor() default ShortTypeConversionProcessor.class;
+public @interface UShortField {
+	Class<?> processor() default UShortFieldConversionProcessor.class;
 
 	boolean allowLossyConversionFrom() default false;
 

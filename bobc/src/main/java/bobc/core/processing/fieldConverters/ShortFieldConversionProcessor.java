@@ -7,15 +7,15 @@ import bobc.core.ByteOrder;
 import bobc.core.exception.BobcErrorCodes;
 import bobc.core.exception.BobcException;
 import bobc.core.processing.ConversionProcessor;
-import bobc.types.ShortType;
+import bobc.types.ShortField;
 
 /**
- * Converter for ShortType
+ * Converter for ShortField
  * 
  * @author bibek.shrestha
  *
  */
-public class ShortTypeConversionProcessor implements ConversionProcessor {
+public class ShortFieldConversionProcessor implements ConversionProcessor {
 
 	@Override
 	public Integer getSize() {
@@ -80,7 +80,7 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 			if (!allowLossyConversion) {
 				if (!isSilent) {
 					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION, "unallowed lossy conversion from "
-							+ fieldType + " to " + ShortType.class + " during packing");
+							+ fieldType + " to " + ShortField.class + " during packing");
 				}
 			} else {
 				// means make the lossy conversion
@@ -91,7 +91,7 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 			if (!allowLossyConversion) {
 				if (!isSilent) {
 					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION, "unallowed lossy conversion from "
-							+ fieldType + " to " + ShortType.class + " during packing");
+							+ fieldType + " to " + ShortField.class + " during packing");
 				}
 			} else {
 				// means make the lossy conversion
@@ -102,7 +102,7 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 			if (!allowLossyConversion) {
 				if (!isSilent) {
 					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION, "unallowed lossy conversion from "
-							+ fieldType + " to " + ShortType.class + " during packing");
+							+ fieldType + " to " + ShortField.class + " during packing");
 				}
 			} else {
 				// means make the lossy conversion
@@ -113,7 +113,7 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 			if (!allowLossyConversion) {
 				if (!isSilent) {
 					throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION, "unallowed lossy conversion from "
-							+ fieldType + " to " + ShortType.class + " during packing");
+							+ fieldType + " to " + ShortField.class + " during packing");
 				}
 			} else {
 				// means make the lossy conversion
@@ -132,7 +132,7 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 			// means there is no conversion way for us
 			if (!isSilent)
 				throw new BobcException(BobcErrorCodes.LOSSY_CONVERSION,
-						"unknown conversion from " + fieldType + " to " + ShortType.class + " during packing");
+						"unknown conversion from " + fieldType + " to " + ShortField.class + " during packing");
 			else {
 				// if silent then we need to put dummy data
 				short randomShort = 0;

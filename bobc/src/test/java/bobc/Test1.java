@@ -1,10 +1,10 @@
 package bobc;
 
-import bobc.types.ShortType;
+import bobc.types.ShortField;
 
 public class Test1 {
-	@ShortType
+	@ShortField
 	public Short short1;
-	@ShortType
+	@ShortField
 	public Integer short2;
 }

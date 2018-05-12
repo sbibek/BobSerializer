@@ -5,12 +5,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import bobc.core.processing.fieldConverters.UShortTypeConversionProcessor;
+import bobc.core.processing.fieldConverters.FloatFieldConversionProcessor;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UShortType {
-	Class<?> processor() default UShortTypeConversionProcessor.class;
+public @interface FloatField {
+	Class<?> processor() default FloatFieldConversionProcessor.class;
 
 	boolean allowLossyConversionFrom() default false;
 

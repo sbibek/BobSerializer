@@ -6,30 +6,31 @@ import java.nio.ByteBuffer;
 import bobc.core.ByteOrder;
 import bobc.core.struct.ByteOrdering;
 import bobc.core.struct.Struct;
-import bobc.types.ShortType;
-import bobc.types.UShortType;
+import bobc.types.ShortField;
+import bobc.types.UShortField;
 
 public class UsageTest {
 
 	@ByteOrdering(ByteOrder.LITTLE_ENDIAN)
 	static public class TT extends Struct<TT> {
-		@ShortType
+		@ShortField
 		public Short var;
 
-		@ShortType
+		@ShortField
 		public String test;
 
-		@UShortType(allowLossyConversionFrom = true)
+		@UShortField(allowLossyConversionFrom = true)
 		public Integer value;
 
-		@UShortType
+		@UShortField
 		public String sval;
 
-		@ShortType
+		@ShortField
 		public char c;
 
-		@UShortType(allowLossyConversionFrom = true)
+		@UShortField(allowLossyConversionFrom = true)
 		public Double d;
+
 	}
 
 	public static void fn(Object... arguments) {

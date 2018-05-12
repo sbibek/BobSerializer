@@ -1,12 +1,12 @@
 package bobc;
 
-import bobc.types.ShortType;
+import bobc.types.ShortField;
 
 public class Test2 {
-	@ShortType
+	@ShortField
 	public Short short3;
-	@ShortType(allowLossyConversionTo = true)
+	@ShortField(allowLossyConversionTo = true)
 	public Long short4;
-	@ShortType(allowLossyConversionTo = true)
+	@ShortField(allowLossyConversionTo = true)
 	public Double short5;
 }
