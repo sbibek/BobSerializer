@@ -3,7 +3,9 @@ package bobc.core;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("rawtypes")
 public class Converter {
@@ -38,11 +40,18 @@ public class Converter {
 		return new ConverterBuilder();
 	}
 
+	public ObjectResults convert(byte[] data, Map<Class<?>, Object> instances) {
+		java.nio.ByteOrder order = byteOrder == ByteOrder.LITTLE_ENDIAN ? java.nio.ByteOrder.LITTLE_ENDIAN
+				: java.nio.ByteOrder.BIG_ENDIAN;
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(order);
+		return bobcCore.convertbytesToTargetObjects(buffer, classList, byteOrder, instances);
+	}
+
 	public ObjectResults convert(byte[] data) {
 		java.nio.ByteOrder order = byteOrder == ByteOrder.LITTLE_ENDIAN ? java.nio.ByteOrder.LITTLE_ENDIAN
 				: java.nio.ByteOrder.BIG_ENDIAN;
 		ByteBuffer buffer = ByteBuffer.wrap(data).order(order);
-		return bobcCore.convertbytesToTargetObjects(buffer, classList, byteOrder);
+		return bobcCore.convertbytesToTargetObjects(buffer, classList, byteOrder, new HashMap<>());
 	}
 
 	public void convert(String hexString) {

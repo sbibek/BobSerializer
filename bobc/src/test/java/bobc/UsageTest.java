@@ -4,10 +4,23 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 
 import bobc.core.ByteOrder;
+import bobc.core.ByteOrdering;
 import bobc.core.Converter;
 import bobc.core.ObjectResults;
+import bobc.core.Struct;
+import bobc.types.ShortType;
 
 public class UsageTest {
+
+	@ByteOrdering(ByteOrder.LITTLE_ENDIAN)
+	static public class TT extends Struct<TT> {
+		@ShortType
+		public Short var;
+
+		@ShortType
+		public String test;
+	}
+
 	public static void fn(Object... arguments) {
 		for (Object arg : arguments) {
 			System.out.println(arg.getClass().toGenericString());
@@ -27,6 +40,9 @@ public class UsageTest {
 		Test1 t1 = r.get(Test1.class);
 		Test2 t2 = r.get(Test2.class);
 
-		System.out.println(t1.short1 + " " + t1.short2 + " " + t2.short3 + " " + t2.short4 + " " + t2.short5);
+		TT tt = new TT();
+		System.out.println(tt.var);
+		tt.from(toBytes());
+		System.out.println(tt.var + " " + tt.test);
 	}
 }

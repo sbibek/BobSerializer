@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 
+import bobc.core.BobcRuntimeException;
 import bobc.core.processing.ConversionProcessor;
 import bobc.core.processing.ConversionUtil;
 
@@ -39,11 +40,11 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 
 			if (!isSilent)
 				// else throw runtime error
-				throw new RuntimeException("unallowed lossy conversion from Short to " + target);
+				throw new BobcRuntimeException("unallowed lossy conversion from Short to " + target);
 		} else {
 			if (!isSilent)
 				// no conversion found
-				throw new RuntimeException("unknown conversion from Short to " + target + " encountered");
+				throw new BobcRuntimeException("unknown conversion from Short to " + target + " encountered");
 		}
 		return null;
 	}
