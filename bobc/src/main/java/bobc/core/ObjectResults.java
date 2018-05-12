@@ -2,6 +2,9 @@ package bobc.core;
 
 import java.util.Map;
 
+import bobc.core.exception.BobcErrorCodes;
+import bobc.core.exception.BobcException;
+
 @SuppressWarnings("rawtypes")
 public class ObjectResults {
 	private Map<Class, Object> results;

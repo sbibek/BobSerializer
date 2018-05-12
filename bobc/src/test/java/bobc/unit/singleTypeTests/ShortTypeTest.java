@@ -9,11 +9,15 @@ import java.nio.ByteBuffer;
 
 import org.junit.Test;
 
-import bobc.core.BobcException;
 import bobc.core.ByteOrder;
 import bobc.core.Converter;
+import bobc.core.exception.BobcException;
 import bobc.types.ShortType;
 
+/**
+ * @author bibek.shrestha
+ *
+ */
 public class ShortTypeTest {
 
 	static public class ShortTypeClassA {

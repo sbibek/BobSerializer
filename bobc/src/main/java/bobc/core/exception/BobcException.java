@@ -1,4 +1,4 @@
-package bobc.core;
+package bobc.core.exception;
 
 public class BobcException extends RuntimeException {
 	private static final long serialVersionUID = 4530370493652879301L;

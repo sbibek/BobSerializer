@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bobc.core.exception.BobcErrorCodes;
+import bobc.core.exception.BobcException;
+
 @SuppressWarnings("rawtypes")
 public class Converter {
 	private List<Class> classList = new ArrayList<>();

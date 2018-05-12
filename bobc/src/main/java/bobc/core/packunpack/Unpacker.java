@@ -1,4 +1,4 @@
-package bobc.core;
+package bobc.core.packunpack;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -6,6 +6,9 @@ import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Map;
 
+import bobc.core.ByteOrder;
+import bobc.core.exception.BobcErrorCodes;
+import bobc.core.exception.BobcException;
 import bobc.core.processing.ConversionProcessor;
 import bobc.utils.ReflectionUtils;
 

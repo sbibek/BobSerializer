@@ -3,9 +3,9 @@ package bobc.core.processing.fieldConverters;
 import java.lang.annotation.Annotation;
 import java.nio.ByteBuffer;
 
-import bobc.core.BobcErrorCodes;
-import bobc.core.BobcException;
 import bobc.core.ByteOrder;
+import bobc.core.exception.BobcErrorCodes;
+import bobc.core.exception.BobcException;
 import bobc.core.processing.ConversionProcessor;
 import bobc.core.processing.ConversionUtil;
 import bobc.types.ShortType;

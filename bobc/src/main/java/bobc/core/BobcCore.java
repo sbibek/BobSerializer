@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bobc.core.packunpack.Packer;
+import bobc.core.packunpack.Unpacker;
+
 @SuppressWarnings("rawtypes")
 public class BobcCore {
 	private Unpacker unpacker = new Unpacker();
