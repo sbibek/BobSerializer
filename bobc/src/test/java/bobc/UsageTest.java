@@ -1,9 +1,11 @@
 package bobc;
 
+import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 
 import bobc.core.ByteOrder;
 import bobc.core.Converter;
+import bobc.core.ObjectResults;
 
 public class UsageTest {
 	public static void fn(Object... arguments) {
@@ -17,10 +19,14 @@ public class UsageTest {
 				.putShort((short) 8).putShort((short) 99).putShort((short) 11).array();
 	}
 
-	public static void main(String[] args) {
-		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(Test2.class).build();
-		Test2 t = converter.convert(toBytes()).get(Test2.class);
+	public static void main(String[] args) throws NoSuchFieldException, SecurityException, NoSuchMethodException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(Test2.class, Test1.class).build();
 
-		System.out.println(t.getVarB() + " " + t.getS() + " " + t.getI() + " " + t.getL() + " " + t.getB());
+		ObjectResults r = converter.convert(toBytes());
+		Test1 t1 = r.get(Test1.class);
+		Test2 t2 = r.get(Test2.class);
+
+		System.out.println(t1.short1 + " " + t1.short2 + " " + t2.short3 + " " + t2.short4 + " " + t2.short5);
 	}
 }

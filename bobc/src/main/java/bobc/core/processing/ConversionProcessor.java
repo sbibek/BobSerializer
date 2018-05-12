@@ -7,7 +7,8 @@ import java.nio.ByteBuffer;
 public interface ConversionProcessor {
 	public Integer getSize();
 
-	public Object fromBytes(Class<?> target, Annotation[] fieldAnnotations, ByteBuffer buffer);
+	public Object fromBytes(Class<?> target, Annotation[] fieldAnnotations, ByteBuffer buffer,
+			Boolean allowLossyConversion, Boolean isSilent);
 
 	public <T> byte[] fromField(Field field, Annotation annotation);
 }

@@ -1,16 +1,10 @@
 package bobc;
 
-import bobc.types.XShort;
+import bobc.types.ShortType;
 
 public class Test1 {
-	@XShort
-	private java.lang.Short a;
-
-	public Test1(java.lang.Short a) {
-		this.a = a;
-	}
-
-	public java.lang.Short getA() {
-		return a;
-	}
+	@ShortType
+	public Short short1;
+	@ShortType
+	public Integer short2;
 }
