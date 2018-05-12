@@ -39,7 +39,7 @@ public class Packer {
 			try {
 				bytes.add(packField(ReflectionUtils.getConversionProcessor(typeAnnotation),
 						field.getDeclaredAnnotations(), object, field, order,
-						ReflectionUtils.getAllowedLossyConversionTo(typeAnnotation),
+						ReflectionUtils.getAllowedLossyConversionFrom(typeAnnotation),
 						ReflectionUtils.getSilent(typeAnnotation)));
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				// TODO Auto-generated catch block

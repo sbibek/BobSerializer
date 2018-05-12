@@ -14,4 +14,5 @@ public class ConversionUtil {
 	public static Long toUnsignedLong(Short value) {
 		return Integer.toUnsignedLong(toUnsignedInteger(value));
 	}
+
 }

@@ -14,5 +14,19 @@ public class BobcErrorCodes {
 	public static final Integer UNKNOWN_CONVERSION = 451;
 	public static final Integer SIZE_EXPECTATION_MISMATCH = 452;
 
+	public static final Integer PACKING_WITH_NULL = 600;
+
 	public static final Integer UNKNOWN = 999;
+
+	public static String lossyConversionMsg(Class<?> from, Class<?> to) {
+		return "lossy conversion from " + from + " to " + to + " not permitted";
+	}
+
+	public static String conversionNotKnown(Class<?> from, Class<?> to) {
+		return "conversion from " + from + " to " + to + " not known";
+	}
+
+	public static String packingWithNull(Class<?> for_) {
+		return "packing null value " + for_ + " not possible";
+	}
 }

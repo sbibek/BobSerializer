@@ -4,11 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.ByteBuffer;
 
 import bobc.core.ByteOrder;
-import bobc.core.Converter;
-import bobc.core.ObjectResults;
 import bobc.core.struct.ByteOrdering;
 import bobc.core.struct.Struct;
 import bobc.types.ShortType;
+import bobc.types.UShortType;
 
 public class UsageTest {
 
@@ -19,6 +18,18 @@ public class UsageTest {
 
 		@ShortType
 		public String test;
+
+		@UShortType(allowLossyConversionFrom = true)
+		public Integer value;
+
+		@UShortType
+		public String sval;
+
+		@ShortType
+		public char c;
+
+		@UShortType(allowLossyConversionFrom = true)
+		public Double d;
 	}
 
 	public static void fn(Object... arguments) {
@@ -34,29 +45,16 @@ public class UsageTest {
 
 	public static void main(String[] args) throws NoSuchFieldException, SecurityException, NoSuchMethodException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(Test1.class, Test2.class).build();
-
-		Test1 a = new Test1();
-		a.short1 = (short) 1;
-		a.short2 = 2;
-		a.str = "19";
-		Test2 b = new Test2();
-		b.short3 = (short) 3;
-		b.short4 = 4L;
-		b.short5 = 5.0;
-
-		ObjectResults r = converter.convert(converter.convert(a, b));
-		Test1 t1 = r.get(Test1.class);
-		Test2 t2 = r.get(Test2.class);
 
 		TT test = new TT();
 
-		test.var = 121;
-		test.test = "212";
+		test.var = (short) 1;
+		test.test = "2";
+		test.value = -1;
+		test.sval = "67";
+		test.c = '1';
 
-		TT test2 = new TT();
-		test2.from(test.toBytes());
-
-		System.out.println(test2.var + " " + test2.test);
+		TT t = test.newInstanceFrom(test.toBytes());
+		System.out.println(t.var + " " + t.value + " " + t.sval + ">" + t.c + " " + t.d);
 	}
 }

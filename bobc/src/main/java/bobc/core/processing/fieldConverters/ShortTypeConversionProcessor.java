@@ -7,7 +7,6 @@ import bobc.core.ByteOrder;
 import bobc.core.exception.BobcErrorCodes;
 import bobc.core.exception.BobcException;
 import bobc.core.processing.ConversionProcessor;
-import bobc.core.processing.ConversionUtil;
 import bobc.types.ShortType;
 
 /**
@@ -29,18 +28,21 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 		// now this field extracts short value from the buffer, then it depends how we
 		// are converting it to the target
 		if (target.equals(Short.class) || target.equals(Short.TYPE)) {
-			return buffer.getShort();
+			return (short) buffer.getShort();
 		} else if (target.equals(Integer.class) || target.equals(Integer.TYPE)) {
-			return ConversionUtil.toUnsignedInteger(buffer.getShort());
+			return (int) buffer.getShort();
 		} else if (target.equals(Long.class) || target.equals(Long.TYPE)) {
-			return ConversionUtil.toUnsignedLong(buffer.getShort());
+			return (long) buffer.getShort();
 		} else if (target.equals(Float.class) || target.equals(Float.TYPE)) {
 			return (float) buffer.getShort();
 		} else if (target.equals(Double.class) || target.equals(Double.TYPE)) {
 			return (double) buffer.getShort();
 		} else if (target.equals(String.class)) {
 			return String.valueOf(buffer.getShort());
+		} else if (target.equals(Character.class) || target.equals(Character.TYPE)) {
+			return Character.forDigit(buffer.getShort(), 10);
 		} else if (target.equals(Byte.class) || target.equals(Byte.TYPE)) {
+
 			// now this is lossy conversion
 			if (allowLossyConversion) {
 				return (byte) buffer.getShort();
@@ -65,6 +67,9 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 		// IMPORTANT your packing should match the size of in getSize()
 		ByteBuffer buffer = ByteBuffer.allocate(2).order(
 				order == ByteOrder.LITTLE_ENDIAN ? java.nio.ByteOrder.LITTLE_ENDIAN : java.nio.ByteOrder.BIG_ENDIAN);
+		if (fieldValue == null) {
+			throw new BobcException(BobcErrorCodes.PACKING_WITH_NULL, BobcErrorCodes.packingWithNull(fieldType));
+		}
 		if (fieldType.equals(Short.class) || fieldType.equals(Short.TYPE) || fieldType.equals(Byte.class)
 				|| fieldType.equals(Byte.TYPE)) {
 			// conversion from short to short and byte to short, no issues
@@ -119,6 +124,10 @@ public class ShortTypeConversionProcessor implements ConversionProcessor {
 			// else will throw number format exception
 			buffer.putShort(Short.parseShort((String) fieldValue));
 
+		} else if (fieldType.equals(String.class) || fieldType.equals(Character.class)
+				|| fieldType.equals(Character.TYPE)) {
+			String val = String.valueOf(fieldValue);
+			buffer.putShort(Short.valueOf(val));
 		} else {
 			// means there is no conversion way for us
 			if (!isSilent)

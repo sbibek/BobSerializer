@@ -52,8 +52,7 @@ public class Unpacker {
 				// TODO, there cannot be multiple types in single field so always take first one
 				Annotation annotation = bobcAnnotations.get(0);
 				unpackField(instance, field, ReflectionUtils.getConversionProcessor(annotation), buffer, order,
-						ReflectionUtils.getAllowedLossyConversionFrom(annotation),
-						ReflectionUtils.getSilent(annotation));
+						ReflectionUtils.getAllowedLossyConversionTo(annotation), ReflectionUtils.getSilent(annotation));
 			}
 			return targetClass.cast(instance);
 		} catch (InstantiationException | IllegalAccessException e) {
