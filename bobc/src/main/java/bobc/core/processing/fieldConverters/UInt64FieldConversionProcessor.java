@@ -20,13 +20,12 @@ public class UInt64FieldConversionProcessor implements ConversionProcessor {
 	@Override
 	public Object fromBytes(Class<?> target, Annotation[] fieldAnnotations, ByteBuffer buffer,
 			Boolean allowLossyConversion, Boolean isSilent) {
-		byte[] value = new byte[8];
-		buffer.get(value);
+		long value = buffer.getLong();
 		// uint64 field can only be used with BigInteger, string
 		if (target.equals(BigInteger.class)) {
-			return new BigInteger(1, value);
+			return new BigInteger(Long.toUnsignedString(value));
 		} else if (target.equals(String.class)) {
-			return Long.toUnsignedString(ByteBuffer.wrap(value).order(buffer.order()).getLong());
+			return Long.toUnsignedString(value);
 		} else {
 			if (!isSilent)
 				throw new BobcException(BobcErrorCodes.UNKNOWN,
@@ -47,7 +46,7 @@ public class UInt64FieldConversionProcessor implements ConversionProcessor {
 
 		// only field type of short and string will be processed for shortField
 		if (fieldType.equals(BigInteger.class)) {
-			buffer.putLong(((BigInteger) fieldValue).longValueExact());
+			buffer.putLong(((BigInteger) fieldValue).longValue());
 		} else if (fieldType.equals(String.class)) {
 			buffer.putLong(Long.parseUnsignedLong(String.class.cast(fieldValue)));
 		} else {
