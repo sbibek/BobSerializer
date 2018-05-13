@@ -15,4 +15,8 @@ public class ConversionUtil {
 		return Integer.toUnsignedLong(toUnsignedInteger(value));
 	}
 
+	public static int longToUnsignedIntRepresentation(long value) {
+		return 0;
+	}
+
 }

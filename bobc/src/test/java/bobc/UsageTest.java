@@ -8,6 +8,7 @@ import bobc.core.ByteOrder;
 import bobc.core.struct.ByteOrdering;
 import bobc.core.struct.Struct;
 import bobc.types.Int32Field;
+import bobc.types.UInt32Field;
 
 public class UsageTest {
 
@@ -21,7 +22,7 @@ public class UsageTest {
 		public Short shortf = (short) 2;
 		@Int32Field
 		public Integer intf = 3;
-		@Int32Field(allowLossyConversionFrom = true)
+		@UInt32Field(allowLossyConversionFrom = true)
 		public Long longf = 4L;
 		@Int32Field(allowLossyConversionFrom = true)
 		public Float floatf = 5.0f;
@@ -52,7 +53,7 @@ public class UsageTest {
 		test.charf = '2';
 		test.shortf = (short) 3;
 		test.intf = 4;
-		test.longf = 5L;
+		test.longf = 4294967295L;
 		test.floatf = 6.0f;
 		test.doublef = 7.0;
 		test.bigintf = BigInteger.valueOf(8);
@@ -63,5 +64,6 @@ public class UsageTest {
 
 		System.out.println(t2.bytef + " " + t2.charf + " " + t2.shortf + " " + t2.intf + " " + t2.longf + " "
 				+ t2.floatf + " " + t2.doublef + " " + t2.bigintf + " " + t2.stringf);
+
 	}
 }
