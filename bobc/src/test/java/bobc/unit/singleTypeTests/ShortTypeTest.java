@@ -2,7 +2,6 @@ package bobc.unit.singleTypeTests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
@@ -11,7 +10,6 @@ import org.junit.Test;
 
 import bobc.core.ByteOrder;
 import bobc.core.Converter;
-import bobc.core.exception.BobcException;
 import bobc.types.ShortField;
 
 /**
@@ -22,74 +20,38 @@ public class ShortTypeTest {
 
 	static public class ShortTypeClassA {
 		@ShortField
-		public Short objectShortVariable;
-		@ShortField
-		public short primitiveShortVariable;
-		@ShortField(allowLossyConversionTo = true)
-		public Byte objectByteVariable;
-		@ShortField(allowLossyConversionTo = true)
-		public byte primitiveByteVariable;
-		@ShortField
-		public Integer objectIntegerVariable;
-		@ShortField
-		public int primitiveIntegerVariable;
-		@ShortField
-		public Long objectLongVariable;
-		@ShortField
-		public long primitiveLongVariable;
-		@ShortField
-		public Float objectFloatVariable;
-		@ShortField
-		public float primitiveFloatVariable;
-		@ShortField
-		public Double objectDoubleVariable;
-		@ShortField
-		public double primitiveDoubleVariable;
-	}
+		public Short a;
 
-	// class with element that doesn't allow lossy conversios (eg short to byte)
-	static public class ShortTypeClassB {
 		@ShortField
-		public Byte byteData;
-	}
-
-	// allpw lossy conversion
-	static public class ShortTypeClassC {
-		@ShortField(allowLossyConversionTo = true)
-		public Byte data;
-	}
-
-	// donot allow lossy converison but also donot throw any exceptions
-	static public class ShortTypeClassD {
-		@ShortField(silent = true)
-		public Byte data;
+		public String b;
 	}
 
 	private byte[] generateDataForClassA() {
-		return ByteBuffer.allocate(24).order(java.nio.ByteOrder.LITTLE_ENDIAN).putShort((short) 1).putShort((short) 2)
-				.putShort((short) 3).putShort((short) 4).putShort((short) 5).putShort((short) 6).putShort((short) 7)
-				.putShort((short) 8).putShort((short) 9).putShort((short) 10).putShort((short) 11).putShort((short) 12)
+		return ByteBuffer.allocate(4).order(java.nio.ByteOrder.LITTLE_ENDIAN).putShort((short) 1).putShort((short) 2)
 				.array();
 	}
 
 	@Test
-	public void primitivesAndObjectTypeUnpackingTest() {
+	public void shortFieldUnpackTestForShortAndString() {
 		byte[] byteData = generateDataForClassA();
 		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(ShortTypeClassA.class).build();
 		ShortTypeClassA testClassA = converter.convert(byteData).get(ShortTypeClassA.class);
 		assertNotNull(testClassA);
-		assertEquals(testClassA.objectShortVariable, (Short) (short) 1);
-		assertEquals(testClassA.primitiveShortVariable, (short) 2);
-		assertEquals(testClassA.objectByteVariable, (Byte) (byte) 3);
-		assertEquals(testClassA.primitiveByteVariable, (byte) 4);
-		assertEquals(testClassA.objectIntegerVariable, new Integer(5));
-		assertEquals(testClassA.primitiveIntegerVariable, 6);
-		assertEquals(testClassA.objectLongVariable, (Long) (long) 7);
-		assertEquals(testClassA.primitiveLongVariable, 8);
-		assertEquals(testClassA.objectFloatVariable, (Float) 9f);
-		assertEquals(testClassA.primitiveFloatVariable, 10f, 0.0001f);
-		assertEquals(testClassA.objectDoubleVariable, new Double(11));
-		assertEquals(testClassA.primitiveDoubleVariable, 12, 0.0001f);
+		assertEquals((Short) (short) 1, testClassA.a);
+		assertEquals("2", testClassA.b);
+	}
+
+	@Test
+	public void packingAndUnpackingToSameClassShouldYeildSameValue() {
+		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(ShortTypeClassA.class).build();
+		ShortTypeClassA a = new ShortTypeClassA();
+		a.a = (short) 11;
+		a.b = "12";
+
+		ShortTypeClassA testClassA = converter.convert(converter.convert(a)).get(ShortTypeClassA.class);
+		assertNotNull(testClassA);
+		assertEquals((Short) (short) 11, testClassA.a);
+		assertEquals("12", testClassA.b);
 	}
 
 	@Test(expected = BufferUnderflowException.class)
@@ -98,32 +60,6 @@ public class ShortTypeTest {
 		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN)
 				.add(ShortTypeClassA.class, ShortTypeClassA.class, ShortTypeClassA.class).build();
 		converter.convert(byteData);
-	}
-
-	@Test(expected = BobcException.class)
-	public void lossyConversionUnSupressedExceptionTest() {
-		byte[] byteData = generateDataForClassA();
-		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(ShortTypeClassB.class).build();
-		converter.convert(byteData);
-	}
-
-	@Test
-	public void lossyConversionSupressedTest() {
-		byte[] byteData = ByteBuffer.allocate(2).order(java.nio.ByteOrder.LITTLE_ENDIAN).putShort((short) 11).array();
-		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(ShortTypeClassC.class).build();
-		assertTrue(converter.convert(byteData).get(ShortTypeClassC.class).data == 11);
-		byteData = ByteBuffer.allocate(2).order(java.nio.ByteOrder.LITTLE_ENDIAN).putShort((short) 65535).array();
-		// confirming the overflow
-		assertTrue(converter.convert(byteData).get(ShortTypeClassC.class).data != 65535
-				&& converter.convert(byteData).get(ShortTypeClassC.class).data == (byte) 65535);
-	}
-
-	@Test
-	public void lossyConversionSilentTest() {
-		// should run silently but should not convert means the data should be null
-		byte[] byteData = ByteBuffer.allocate(2).order(java.nio.ByteOrder.LITTLE_ENDIAN).putShort((short) 11).array();
-		Converter converter = Converter.builder().order(ByteOrder.LITTLE_ENDIAN).add(ShortTypeClassD.class).build();
-		assertTrue(converter.convert(byteData).get(ShortTypeClassD.class).data == null);
 	}
 
 }
