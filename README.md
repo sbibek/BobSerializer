@@ -1,6 +1,6 @@
 # BOBC ```Byte-Object-Byte Conversion```
 
-BOBC is a conversion/serialization library conceived as a need of working on byte level when designing low byte level protocol between systems speaking java and C. Yes, there are ways to do this with existing Java API and special classes such as ByteBuffer etc. As per my experience goes, I spent more time figuring out to deal with the conversion (issues like unsigned, order or packing and unpacking etc). Hence, easy to use annotation driven conversion/serialization library that just works. 
+BOBC is a conversion/serialization library conceived as a need of working on byte level controlled serialization when designing low byte level protocol between systems speaking java and C. Yes, there are ways to do this with existing Java API and special classes such as ByteBuffer etc. As per my experience goes, I spent more time figuring out to deal with the conversion (issues like unsigned, order or packing and unpacking etc). Hence, easy to use annotation driven conversion/serialization library that just works. 
 
 Please note that the project is still at infant stage. More design, features will be added on the go as things start taking shape. Getting started with just simple annotation driven conversion API and simple staright forward usage using Struct class for standard data types. I will be trying to make design to allow flexibility for adding custom coversion routines so that conversion/serialziation can be done for any  kind of classes.
 
@@ -17,14 +17,11 @@ public class DummyProtocolHeader extends Struct<DummyProtocolHeader> {
     @UShortField
     private Integer transactionCode
     
-    @UInt32Field
-    private Long payloadSize;
-    
     @ULongField
     private BigInteger timeStampNanoSec;
 }
 ````
-Struct.class is a abstract class exposing functionality of conversion to any class extending it. And yes, Unsigned :D. Java doesn't have language support for unsigned. So how do we overcome this? You may have already recognized the pattern. Unsigned will be handled by type promotion to higher byte type class in Java. Unsigned Short -> Integer, Unsigned Integer -> Long, Unsigned Long -> BigInteger. The details of the conversion cases will be provided below. If we even use type promotion, conversion from annotated type to actual type works. But what for the way oppsite, it will be lossy, nah? Oh yes, it will be lossy if you literally cast it that way. But the catch here is that since annotation defines your long to behave as Unisgned Int32, then its clear to programmer that the long should only hold values for Unsigned Int32. This way the reverse conversion will not be lossy as it always will fall under the upper and lower bounds. Hence, programmer using this library should make sure that if you are assuming a field to be of unsigned type then you should maintain it in the logic that it behaves as unsigned. One way library can make sure of that will be checking the bounds before making conversions. Same applies for all the types included in BOBC.
+````Struct.class```` is a abstract class exposing functionality of conversion to any class extending it. And yes, Unsigned :D. Java doesn't have language support for unsigned. So how do we overcome this? You may have already recognized the pattern. Unsigned will be handled by type promotion to higher byte type class in Java. ````Unsigned Short -> Integer, Unsigned Integer -> Long, Unsigned Long -> BigInteger````. The details of the conversion cases will be provided below. If we even use type promotion, conversion from annotated type to actual type works. But what for the way oppsite, it will be lossy, nah? Oh yes, it will be lossy if you literally cast it that way. But the catch here is that since annotation defines your long to behave as Unisgned Int32, then its clear to programmer that the long should only hold values for Unsigned Int32. This way the reverse conversion will not be lossy as it always will fall under the upper and lower bounds. Hence, programmer using this library should make sure that if you are assuming a field to be of unsigned type then you should maintain it in the logic that it behaves as unsigned. One way library can make sure of that will be checking the bounds before making conversions. Same applies for all the types included in BOBC.
 
 So, how to convert our header to bytes?
 ````java
@@ -96,3 +93,52 @@ ObjectResults results = converter.convert(data, instances);
 DummyProtocolHeader header2 = results.get(DummyProtocolHeader.class);
 // header == header2 (if map of instance was provided)
 ````
+
+How to convert from Object(s) to respective bytes?
+````java
+// build converter for our Dummy Protocol Header
+Converter converter = Converter.builder().order(order).add(DummyProtocolHeader.class).build();
+
+// lets suppose we have an Object for the header, all set to be converted
+DummyProtocolHeader header = new DummyProtocolHeader();
+
+// now lets convert
+byte[] data = converter.convert(header);
+````
+
+All examples has only one argument for add and convert, but actually there can be multiple files. Lets consider that there is another ````class DummyProtocolPayload````
+````java
+@ByteOrdering(ByteOrder.LITTLE_ENDIAN)
+public class DummyProtocolPayload extends Struct<DummyProtocolPayload> {
+    @Int32Field
+    public Integer payloadChecksum;
+    
+    @LongField
+    public Long somePayload;
+}
+````
+
+Now, the BOBC API can take both at the same time.
+````java
+Converter converter = Converter.builder().order(order).add(DummyProtocolHeader.class,DummyProtocolPayload.class).build();
+
+DummyProtocolHeader header = new DummyProtocolHeader();
+DummyProtocolPayload payload = new DummyProtocolPayload();
+
+// now convert both into bytes, the order of addition of Objects are critical.
+byte[] data = converter.convert(header,payload);
+````
+
+Same thing is true for reverse operation.
+
+
+# Extending
+Docs coming soon.
+
+# Feature requests
+The project is at very infant stage. Since the conversion policies can be altered to make some standard. Right now I am getting started with what I have in mind. I am open to suggestions for defining standards. So feature requests will be addressed.
+
+# Contribution
+Helping hands, yes please :)
+
+
