@@ -1,8 +1,7 @@
-# BOBC ```Byte-Object-Byte Conversion```
+# BOB-Serialization 
 
-BOBC is a conversion/serialization library conceived as a need of working on byte level controlled serialization when designing low byte level protocol between systems speaking java and C. Yes, there are ways to do this with existing Java API and special classes such as ByteBuffer etc. As per my experience goes, I spent more time figuring out to deal with the conversion (issues like unsigned, order or packing and unpacking etc). Hence, easy to use annotation driven conversion/serialization library that just works. 
+BOB is an annotation driven serialization library for Java. Annotations has made my life easier in many project and I wanted to exted that experience to the serialization world where annotation driven serialization was missing.    
 
-Please note that the project is still at infant stage. More design, features will be added on the go as things start taking shape. Getting started with just simple annotation driven conversion API and simple staright forward usage using Struct class for standard data types. I will be trying to make design to allow flexibility for adding custom coversion routines so that conversion/serialziation can be done for any  kind of classes.
 
 ## Getting started
 ````java
@@ -130,15 +129,4 @@ byte[] data = converter.convert(header,payload);
 ````
 
 Same thing is true for reverse operation.
-
-
-# Extending
-Docs coming soon.
-
-# Feature requests
-The project is at very infant stage. Since the conversion policies can be altered to make some standard. Right now I am getting started with what I have in mind. I am open to suggestions for defining standards. So feature requests will be addressed.
-
-# Contribution
-Helping hands, yes please :)
-
 
